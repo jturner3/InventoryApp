@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layouts/basic">
+<head>
+<title>All Users List</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body layout:fragment="content">
+	<h1>H0RUS THREADS Orders</h1>
+	<a class="btn btn-success" href="/" th:href="@{|/order/create|}"
+		role="button">Create New Order</a>
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>Order ID</th>
+				<th>Customer Last Name</th>
+				<th>Customer Email</th>
+				<th>Products</th>
+				<th>Total Price</th>
+				<th>Date of Order</th>
+				<th>&nbsp;</th>
+				<th>&nbsp;</th>
+				<th>&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="order : ${orders}">
+
+				<td th:text="${order.id}"></td>
+				<td th:text="${order.user.lastName}"></td>
+				<td th:text="${order.user.email}"></td>
+				<td th:text="${order.product.productBrand}"></td>
+				<td th:text="${order.product.price}"></td>
+				<td th:text="${order.transactionDate}"></td>
+				<td><a class="btn btn-primary" href="/"
+					th:href="@{|/order/${order.id}}" role="button">View</a></td>
+				<td><a class="btn btn-info" href="/"
+					th:href="@{|/order/${order.id}/edit|}" role="button">Edit</a></td>
+				<td><a class="btn btn-danger" href="/"
+					th:href="@{|/order/${order.id}/delete|}" role="button">Delete</a></td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>

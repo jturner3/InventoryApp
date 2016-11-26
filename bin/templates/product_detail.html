@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layouts/basic">
+<head>
+<title>Product Detail</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body layout:fragment="content">
+	<div class="row">
+		<h1>View Product</h1>
+		<div th:if="${product}">
+			<div class="list-group row col-md-6" th:object="${product}">
+				<div class="list-group-item">
+					<h4 class="list-group-item-heading">SKU</h4>
+					<p class="list-group-item-text" th:text="*{id}"></p>
+				</div>
+				<div class="list-group-item">
+					<h4 class="list-group-item-heading">Product Brand</h4>
+					<p class="list-group-item-text" th:text="*{productBrand}"></p>
+				</div>
+				<div class="list-group-item">
+					<h4 class="list-group-item-heading">Apparal Type</h4>
+					<p class="list-group-item-text" th:text="*{apparalType}"></p>
+				</div>
+				<div class="list-group-item">
+					<h4 class="list-group-item-heading">Description</h4>
+					<p class="list-group-item-text" th:text="*{description}"></p>
+				</div>
+				<div class="list-group-item">
+					<h4 class="list-group-item-heading">Price</h4>
+					<p class="list-group-item-text" th:text="*{price}"></p>
+				</div>
+				<div class="list-group-item">
+					<h4 class="list-group-item-heading">Inventory</h4>
+					<p class="list-group-item-text" th:text="*{inventory}"></p>
+				</div>
+				<p class="list-group-item">
+					<a href="/" th:href="@{|/product/${product.id}/edit|}">Edit</a>
+				</p>
+			</div>
+			</div>
+		</div>
+		<div th:unless="${product}">
+			<h3>No product found.</h3>
+		</div>
+		<div class="row">
+			<a class="col-md-4" href="/home">Back</a>
+		</div>
+</body>
+</html>
