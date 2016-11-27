@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layouts/basic">
+<head>
+<title>HORUS THREADS Inventory Order Management</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body layout:fragment="content">
+	<h1>Delete Order</h1>
+	<div class="row col-md-8">
+		<form method="POST" th:object="${order}">
+			<div th:if="${order}">
+				<div class="list-group row col-md-8" th:object="${order}">
+					<div class="list-group-item">
+						<h4 class="list-group-item-heading">ID</h4>
+						<p class="list-group-item-text" th:text="*{id}"></p>
+					</div>
+					<div class="list-group-item">
+						<h4 class="list-group-item-heading">Customer Name</h4>
+						<p class="list-group-item-text" th:text="*{user.firstName} + ' ' + *{user.lastName} "></p>
+					</div>
+					<div class="list-group-item">
+						<h4 class="list-group-item-heading">Email Address</h4>
+						<p class="list-group-item-text" th:text="*{user.email}"></p>
+					</div>
+					<div class="list-group-item">
+						<h4 class="list-group-item-heading">Product</h4>
+						<p class="list-group-item-text" th:text="*{product.productBrand}"></p>
+					</div>
+					<div class="list-group-item">
+						<h4 class="list-group-item-heading">Price</h4>
+						<p class="list-group-item-text" th:text="*{product.price}"></p>
+					</div>
+					<p class="list-group-item">
+						<a href="/" th:href="@{|/order/${order.id}/edit|}">Edit</a>
+					</p>
+				</div>
+			</div>
+
+			<div th:unless="${order}">
+				<h3>No order found.</h3>
+			</div>		
+		</form>
+		<div class="row col-md-6">
+			<button type="submit" class="btn btn-danger">Delete</button>
+			<a class ="row" href="/orders">Back</a>
+		</div>
+	</div>
+</body>
+</html>

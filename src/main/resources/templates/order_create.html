@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layouts/basic">
+<head>
+   <title>H0RUS THREADS Order Create</title>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body layout:fragment="content">
+	<h1>Create Order</h1>
+	<div class="row col-md-6">
+		<form method="POST" th:object="${order}">
+			<input type="hidden" name="id" th:value="*{user.id}"/>
+			 <div class="form-group">
+              <label for="user.id">Customer</label>
+              <select class="form-control" th:field="*{user.id}">
+              <option th:each="user : ${users}" 
+                      th:value="${user.id}" 
+                      th:selected="*{user.id} == ${user.id}"
+                      th:text="${user.firstName} + ' ' + ${user.lastName}"></option>
+              </select>
+              <span class="alert alert-warning" th:if="${#fields.hasErrors('user.id')}" th:errors="*{user.id}">User ID Error</span>
+          </div>
+		 <div class="form-group">
+              <label for="product.id">Product</label>
+              <select class="form-control" th:field="*{product.id}">
+              <option th:each="product : ${products}" 
+                      th:value="${product.id}" 
+                      th:selected="*{product.id} == ${product.id}"
+                      th:text="${product.productBrand}"></option>
+              </select>
+              <span class="alert alert-warning" th:if="${#fields.hasErrors('product.id')}" th:errors="*{product.id}">Product ID Error</span>
+          </div>
+		       <div class="form-group">
+		    	<label for="date">Order Date</label>
+		    	<input type="text" name="date" class="form-control" placeholder="monday" th:field="*{transactionDate}"/>
+		    	<span th:if="${#fields.hasErrors('transactionDate')}" th:errors="*{transactionDate}">Order Date Error</span>
+		    </div>
+		    <button type="submit" class="btn btn-success">Submit</button>
+		</form>
+	</div>
+ 	
+</body>
+</html>
