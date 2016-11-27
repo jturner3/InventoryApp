@@ -128,6 +128,73 @@ public class IndexController {
 		model.addAttribute("users", userRepo.findAll());
 		return "users";
 	}
+	
+	@GetMapping("/user/{id}")
+	public String user(Model model, @PathVariable(name = "id") long id) {
+		model.addAttribute("id", id);
+		User u = userRepo.findOne(id);
+		model.addAttribute("user", u);
+		return "user_detail";
+	}
+
+	@GetMapping("/user/{id}/edit")
+	public String userEdit(Model model, @PathVariable(name = "id") long id) {
+		model.addAttribute("id", id);
+		User u = userRepo.findOne(id);
+		model.addAttribute("user", u);
+		return "user_edit";
+	}
+
+	@PostMapping("/user/{id}/edit")
+	public String userEditSave(@PathVariable(name = "id") long id, @ModelAttribute @Valid User user,
+			BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			model.addAttribute("user", user);
+			return "user_edit";
+		} else {
+			userRepo.save(user);
+			return "redirect:/user/" + user.getId();
+		}
+
+	}
+	
+	@GetMapping("/user/{id}/delete")
+	public String userDelete(Model model, @PathVariable(name = "id") long id) {
+		model.addAttribute("id", id);
+		User u = userRepo.findOne(id);
+		model.addAttribute("user", u);
+		return "user_delete";
+	}
+
+	@PostMapping("/user/{id}/delete")
+	public String userDeleteSave(@PathVariable(name = "id") long id, @ModelAttribute @Valid User user,
+			BindingResult result, Model model) {
+
+			userRepo.delete(user);
+			return "redirect:/users";
+
+	}
+	@GetMapping("/user/create")
+	public String userCreate(Model model) {
+		model.addAttribute(new User());
+		return "user_create";
+	}
+
+	@PostMapping("/user/create")
+	public String userCreateSave(@ModelAttribute @Valid User user,
+			BindingResult result, Model model) {
+
+		if (result.hasErrors()) {
+			model.addAttribute("user", user);
+			return "user_create";
+		} else {
+			userRepo.save(user);
+			UserRole ur = new UserRole(user.getId());
+			userRoleRepo.save(ur);
+			return "redirect:/users";
+		}
+
+	}
 
 	@GetMapping("/login")
 	public String login(Model model) {
@@ -137,6 +204,28 @@ public class IndexController {
 	@PostMapping("/login")
 	public String loginSubmit() {
 		return "index";
+	}
+	
+	@GetMapping("/signup")
+	public String signup(Model model) {
+		model.addAttribute(new User());
+		return "signup";
+	}
+
+	@PostMapping("signup")
+	public String signupSave(@ModelAttribute @Valid User user,
+			BindingResult result, Model model) {
+
+		if (result.hasErrors()) {
+			model.addAttribute("user", user);
+			return "signup";
+		} else {
+			userRepo.save(user);
+			UserRole ur = new UserRole(user.getId());
+			userRoleRepo.save(ur);
+			return "redirect:/";
+		}
+
 	}
 	
 	@GetMapping("/orders")
