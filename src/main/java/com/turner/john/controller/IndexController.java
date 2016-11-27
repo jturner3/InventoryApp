@@ -59,6 +59,69 @@ public class IndexController {
 		model.addAttribute("product", p);
 		return "product_detail";
 	}
+	
+	@GetMapping("/product/{id}/edit")
+	public String productEdit(Model model, @PathVariable(name = "id") long id) {
+		model.addAttribute("id", id);
+		Product p = productRepo.findOne(id);
+		model.addAttribute("product", p);
+		return "product_edit";
+	}
+
+	@PostMapping("/product/{id}/edit")
+	public String productEditSave(@PathVariable(name = "id") long id, @ModelAttribute @Valid Product product,
+			BindingResult result, Model model) {
+
+		if (result.hasErrors()) {
+			model.addAttribute("product", product);
+			return "product_edit";
+		} else {
+			productRepo.save(product);
+			return "redirect:/product/" + product.getId();
+		}
+
+	}
+	
+	@GetMapping("/product/{id}/delete")
+	public String productDelete(Model model, @PathVariable(name = "id") long id) {
+		model.addAttribute("id", id);
+		Product p = productRepo.findOne(id);
+		model.addAttribute("product", p);
+		return "product_delete";
+	}
+
+	@PostMapping("/product/{id}/delete")
+	public String productDeleteSave(@PathVariable(name = "id") long id, @ModelAttribute @Valid Product product,
+			BindingResult result, Model model) {
+
+		if (result.hasErrors()) {
+			model.addAttribute("product", product);
+			return "product_delete";
+		} else {
+			productRepo.delete(product);
+			return "redirect:/home";
+		}
+
+	}
+	@GetMapping("/product/create")
+	public String productCreate(Model model) {
+		model.addAttribute(new Product());
+		return "product_create";
+	}
+
+	@PostMapping("/product/create")
+	public String productCreateSave(@ModelAttribute @Valid Product product,
+			BindingResult result, Model model) {
+
+		if (result.hasErrors()) {
+			model.addAttribute("product", product);
+			return "product_create";
+		} else {
+			productRepo.save(product);
+			return "redirect:/home";
+		}
+
+	}
 
 	@GetMapping("/users")
 	public String users(Model model) {
