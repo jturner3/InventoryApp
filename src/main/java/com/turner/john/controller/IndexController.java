@@ -81,4 +81,75 @@ public class IndexController {
 		model.addAttribute("orders", orderRepo.findAll());
 		return "orders";
 	}
+	
+	@GetMapping("/order/{id}")
+	public String order(Model model, @PathVariable(name = "id") long id) {
+		model.addAttribute("id", id);
+		Order o = orderRepo.findOne(id);
+		model.addAttribute("order", o);
+		return "order_detail";
+	}
+
+	@GetMapping("/order/{id}/edit")
+	public String orderEdit(Model model, @PathVariable(name = "id") long id) {
+		model.addAttribute("id", id);
+		Order o = orderRepo.findOne(id);
+		model.addAttribute("order", o);
+		model.addAttribute("users", userRepo.findAll());
+		model.addAttribute("products", productRepo.findAll());
+		return "order_edit";
+	}
+
+	@PostMapping("/order/{id}/edit")
+	public String orderEditSave(@PathVariable(name = "id") long id, @ModelAttribute @Valid Order order,
+			BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			model.addAttribute("order", order);
+			return "order_edit";
+		} else {
+			orderRepo.save(order);
+			return "redirect:/order/" + order.getId();
+		}
+
+	}
+	
+	@GetMapping("/order/{id}/delete")
+	public String orderDelete(Model model, @PathVariable(name = "id") long id) {
+		model.addAttribute("id", id);
+		Order o = orderRepo.findOne(id);
+		model.addAttribute("order", o);
+		return "order_delete";
+	}
+
+	@PostMapping("/order/{id}/delete")
+	public String orderDeleteSave(@PathVariable(name = "id") long id, @ModelAttribute @Valid Order order,
+			BindingResult result, Model model) {
+
+			orderRepo.delete(order);
+			return "redirect:/orders";
+
+	}
+	@GetMapping("/order/create")
+	public String orderCreate(Model model) {
+
+		model.addAttribute(new Order(new Product(), new User()));
+		model.addAttribute("users", userRepo.findAll());
+		model.addAttribute("products", productRepo.findAll());
+		return "order_create";
+	}
+
+	@PostMapping("/order/create")
+	public String orderCreateSave(@ModelAttribute @Valid Order order,
+			BindingResult result, Model model) {
+
+		if (result.hasErrors()) {
+			model.addAttribute("order", order);
+			return "order_create";
+		} else {
+			orderRepo.save(order);
+			
+			return "redirect:/orders";
+		}
+
+	}
 }
