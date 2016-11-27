@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layouts/basic">
+<head>
+<title>H0RUS THREADS Inventory Product Management</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body layout:fragment="content">
+	<h1>Edit Product</h1>
+	<div class="row col-md-6">
+		<form method="POST" th:object="${product}">
+			<input type="hidden" name="id" th:value="*{id}" />
+			<div class="form-group">
+				<label for="productBrand">Product Brand</label> <input type="text"
+					name="productBrand" class="form-control" placeholder="Product Brand"
+					th:field="*{productBrand}" /> <span
+					th:if="${#fields.hasErrors('productBrand')}"
+					th:errors="*{productBrand">Product Brand Error</span>
+			</div>
+			<div class="form-group">
+				<label for="description">Description</label> <input type="text"
+					name="description" class="form-control" placeholder="Description"
+					th:field="*{description}" /> <span
+					th:if="${#fields.hasErrors('description')}"
+					th:errors="*{description}">Description Error</span>
+			</div>
+			<div class="form-group">
+				<label for="apparalType">Apparal Type</label> 
+				<select name="apparalType">
+		    		<option th:selected="*{apparalType} == '0 - Shirt' " value='0 - Shirt'>0 - Shirt</option>
+		    		<option th:selected="*{apparalType} == '1 - Long Sleeve' " value="1 - Long Sleeve">1 - Long Sleeve</option>
+		    		<option th:selected="*{apparalType} == '2 - Hoodie' " value="2 - Hoodie">2 - Hoodie</option>
+		    		<option th:selected="*{apparalType} == '3 - Jacket' " value="3 - Jacket">3 - Jacket</option>
+		    		<option th:selected="*{apparalType} == '4 - Crewneck' " value="4 - Crewneck">4 - Crewneck</option>
+		    		<option th:selected="*{apparalType} == '5 - Sweatpants' " value="5 - Sweatpants">5 - Sweatpants</option>
+		    		</select>
+			</div>
+			<div class="form-group">
+				<label for="price">Price</label> <input type="text" name="price"
+					class="form-control" placeholder="price" th:field="*{price}" /> <span
+					th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Price
+					Error</span>
+			</div>
+			<div class="form-group">
+				<label for="inventory">Inventory</label> <input type="text"
+					name="inventory" class="form-control" placeholder="1"
+					th:field="*{inventory}" /> <span
+					th:if="${#fields.hasErrors('inventory')}" th:errors="*{inventory}">InventoryError</span>
+			</div>
+			<button type="submit" class="btn btn-success">Submit</button>
+		</form>
+			<div class="row">
+			<a class="col-md-4" href="/home">Back</a>
+		</div>
+	</div>
+</body>
+</html>
