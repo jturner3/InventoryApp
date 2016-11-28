@@ -10,12 +10,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-
+//Allows for the table to be created as an entity
 @Entity
 @Table(name = "orders")
 public class Order {
 
-
+	//Generates an ID number for the order
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
@@ -23,7 +23,7 @@ public class Order {
 	private String transactionDate;
 	
 	
-	
+	//Allows the user and product to be combined in a table for the order
 	@OneToOne(optional=false)
 	@JoinColumn(name="user_id")
 	private User user;
@@ -32,7 +32,7 @@ public class Order {
 	@JoinColumn(name="product_id")
 	private Product product;
 
-
+	//Getters and setters along with the hashcode
 	public Order(Product product, User user){
 		this.product = product;
 		this.user = user;

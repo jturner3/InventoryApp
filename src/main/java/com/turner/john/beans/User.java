@@ -11,10 +11,12 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+//Table is created for the users
 @Entity
 @Table(name = "users")
 public class User {
-
+	
+	//Id is generated and properties are given for the user class
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;

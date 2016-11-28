@@ -6,10 +6,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+//User role table is created for the user class
 @Entity
 @Table(name = "user_roles")
 public class UserRole {
 
+	//ID's are generated for User roles along with their properties
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;

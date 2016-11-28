@@ -10,10 +10,12 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
+//Table is created for the products
 @Entity
 @Table(name = "products")
 public class Product {
 	
+	//Id is genereated for the product along with the variables/properties that are established
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
@@ -31,6 +33,7 @@ public class Product {
 	
 	private int inventory;
 
+	//Getters and setters along with hashcode
 	public long getId() {
 		return id;
 	}
